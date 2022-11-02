@@ -8,7 +8,7 @@ output:
 
 ### Load Packages
 
-```{r}
+```{r setup, include=FALSE}
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
@@ -16,19 +16,9 @@ library(flexdashboard)
 library(p8105.datasets)
 ```
 
-### Question:
+### 
 
-> Create a flexdashboard using `plotly` for that includes at least three distinct plot types (e.g. scatterplots, line plots, bar plots, box plots, etc.). Use one of the following datasets, and load from the `p8105.datasets` package:
->
-> -   [Instacart](https://p8105.com/dataset_instacart.html)
->
-> -   [NY NOAA](https://p8105.com/dataset_noaa.html)
->
-> -   [NYC Restaurant Inspections](https://p8105.com/dataset_restaurant_inspections.html)
->
-> These datasets are large; you may want / need to filter or randomly sample from the complete dataset to ensure a reasonable product.
-
-### NY NOAA
+### NY NOAA dataset with sample size of 1000
 
 ```{r}
 data("ny_noaa")
@@ -36,7 +26,7 @@ data("ny_noaa")
 ny_noaa = 
   ny_noaa %>% 
   as_tibble(ny_noaa) %>%
-  sample_n( 1000)
+  sample_n(1000)
 ```
 
 #### Scatterplot of minimun temperature vs maximum temperature
