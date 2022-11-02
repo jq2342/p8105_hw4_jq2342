@@ -13,18 +13,56 @@ library(tidyverse)
 library(p8105.datasets)
 library(plotly)
 library(flexdashboard)
+library(p8105.datasets)
 ```
 
+### Question:
+
+> Create a flexdashboard using `plotly` for that includes at least three distinct plot types (e.g. scatterplots, line plots, bar plots, box plots, etc.). Use one of the following datasets, and load from the `p8105.datasets` package:
+>
+> -   [Instacart](https://p8105.com/dataset_instacart.html)
+>
+> -   [NY NOAA](https://p8105.com/dataset_noaa.html)
+>
+> -   [NYC Restaurant Inspections](https://p8105.com/dataset_restaurant_inspections.html)
+>
+> These datasets are large; you may want / need to filter or randomly sample from the complete dataset to ensure a reasonable product.
+
+### NY NOAA
+
 ```{r}
-nyc_airbnb %>%
-  mutate(text_label = str_c("Price: $", price, "\nRating: ", rating)) %>% 
+data("ny_noaa")
+
+ny_noaa = 
+  ny_noaa %>% 
+  as_tibble(ny_noaa) %>%
+  sample_n( 1000)
+```
+
+#### Scatterplot of minimun temperature vs maximum temperature
+
+```{r}
+ny_noaa %>%
+  mutate(text_label = str_c("minimum: C ",tmin, "\nmaximum: C ", tmax,  "\ndate:", date)) %>% 
   plot_ly(
-    x = ~lat, y = ~long, type = "scatter", mode = "markers",
-    color = ~price, text = ~text_label, alpha = 0.5)
+    x =~tmin , y = ~tmax, type = "scatter", mode = "markers",
+    color = ~id, text = ~text_label, alpha = 0.5)
 ```
 
+#### Bar plot showing number of observation every station collected
+
 ```{r}
-nyc_airbnb %>% 
-  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %>% 
-  plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
+ny_noaa %>% 
+  count(id) %>% 
+  mutate(id = fct_reorder(id, n))  %>% 
+  plot_ly(x = ~id, y = ~n, color = ~id, type = "bar", colors = "viridis")
+```
+
+#### Box plot showing the distribution of precipitation through 1981-2010
+
+```{r}
+ny_noaa %>% 
+  separate(date, into = c("year", "month", "day")) %>%
+  mutate(text_label = str_c("year: ",year, "\nprecipitation: ", prcp)) %>% 
+  plot_ly(x = ~year, y = ~prcp,  type = "box", colors = "viridis")
 ```
