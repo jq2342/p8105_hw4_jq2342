@@ -29,7 +29,10 @@ ny_noaa =
   sample_n(1000)
 ```
 
-#### Scatterplot of minimun temperature vs maximum temperature
+    Column {data-width=650}
+    -----------------------------------------------------------------------
+
+### Chart A Scatterplot of minimun temperature vs maximum temperature
 
 ```{r}
 ny_noaa %>%
@@ -39,7 +42,10 @@ ny_noaa %>%
     color = ~id, text = ~text_label, alpha = 0.5)
 ```
 
-#### Bar plot showing number of observation every station collected
+    Column {data-width=350}
+    -----------------------------------------------------------------------
+
+### Chart B Bar plot showing number of observation every station collected
 
 ```{r}
 ny_noaa %>% 
@@ -48,7 +54,7 @@ ny_noaa %>%
   plot_ly(x = ~id, y = ~n, color = ~id, type = "bar", colors = "viridis")
 ```
 
-#### Box plot showing the distribution of precipitation through 1981-2010
+### Chart C Box plot showing the distribution of precipitation through 1981-2010
 
 ```{r}
 ny_noaa %>% 
